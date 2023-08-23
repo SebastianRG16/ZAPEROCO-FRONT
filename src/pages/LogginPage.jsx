@@ -1,4 +1,5 @@
 import niñosCancer from "../assets/images/niñosCancer.png";
+import { Link } from "react-router-dom";
 
 export function LogginPage() {
   return (
@@ -72,13 +73,20 @@ export function LogginPage() {
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    <button className="w-full mb-2 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                       Iniciar sesión
                     </button>
+                    <Link
+                    to='donar'
+                      type="button"
+                      className="cursor-pointer text-center w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    >
+                      Hacer donacion
+                    </Link>
                   </div>
                 </form>
 
-                <p className="mt-6 text-sm text-center text-gray-400">
+                {/* <p className="mt-6 text-sm text-center text-gray-400">
                   ¿Aún no tiene cuenta?{" "}
                   <a
                     href="#"
@@ -87,7 +95,7 @@ export function LogginPage() {
                     Crear cuenta
                   </a>
                   .
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
