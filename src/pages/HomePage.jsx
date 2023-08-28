@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export function HomePage() {
@@ -18,22 +18,42 @@ export function HomePage() {
             </a>
             <ul className="hidden items-center gap-6 lg:flex">
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                <a
-                  className="flex items-center font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
-                  href=" "
+                <Link
+                  to="/home"
+                  className={` ${
+                    direccion == "/home"
+                      ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                      : ""
+                  } flex items-center hover:text-cyan-900  hover:font-semibold`}
                 >
                   Registrar informacion
-                </a>
+                </Link>
               </li>
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                <a className="flex items-center" href="">
+                <Link
+                  to="resumen/"
+                  className={` ${
+                    direccion == "/home/resumen/"
+                      ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                      : ""
+                  } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  href=""
+                >
                   Resumen
-                </a>
+                </Link>
               </li>
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                <a className="flex items-center" href="">
+                <Link
+                  to="QR/"
+                  className={` ${
+                    direccion == "/home/QR/"
+                      ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                      : ""
+                  } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  href=""
+                >
                   Leer codigo QR
-                </a>
+                </Link>
               </li>
             </ul>
             <Link
@@ -104,8 +124,10 @@ export function HomePage() {
         </div>
       </nav>
       <div className="w-full h-screen">
-        <div className="mt-20 max-w-screen-xl mx-auto">
-          Informacion de la pagina
+        <div className="">
+          <div className="max-w-screen-xl mx-auto">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

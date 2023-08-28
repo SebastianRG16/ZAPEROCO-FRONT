@@ -1,3 +1,3 @@
 export function ReadQRComponent() {
-  return <div>ReadQRComponent</div>;
+  return <div className="mt-20">ReadQRComponent</div>;
 }
