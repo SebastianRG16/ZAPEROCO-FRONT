@@ -1,10 +1,17 @@
 import niñosCancer from "../assets/images/niñosCancer.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function LogginPage() {
+  const navigate = useNavigate();
+
+  const validateUser = () => {
+    console.log("hola");
+    navigate("home");
+  };
+
   return (
     <div>
-      <div className="bg-white dark:bg-gray-900">
+      <div className="bg-slate-200">
         <div className="flex justify-center h-screen">
           <div
             className="hidden bg-cover lg:block lg:w-2/3"
@@ -26,11 +33,11 @@ export function LogginPage() {
           <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
             <div className="flex-1">
               <div className="text-center">
-                <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">
+                <h2 className="text-4xl font-bold text-center text-gray-700 ">
                   ZAPEROCO
                 </h2>
 
-                <p className="mt-3 text-gray-500 dark:text-gray-300">
+                <p className="mt-3 text-gray-500 ">
                   Inicie sesión para acceder a su cuenta
                 </p>
               </div>
@@ -38,21 +45,21 @@ export function LogginPage() {
               <div className="mt-8">
                 <form>
                   <div>
-                    <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                    <label className="block mb-2 text-sm text-gray-600 ">
                       Correo electronico
                     </label>
                     <input
                       type="email"
                       name="email"
                       id="email"
-                      placeholder="example@example.com"
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      placeholder="ejemplo@ejemplo.com"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
                   <div className="mt-6">
                     <div className="flex justify-between mb-2">
-                      <label className="text-sm text-gray-600 dark:text-gray-200">
+                      <label className="text-sm text-gray-600 ">
                         Contraseña
                       </label>
                       <a
@@ -62,22 +69,24 @@ export function LogginPage() {
                         {/* Forgot password? */}
                       </a>
                     </div>
-
                     <input
                       type="password"
                       name="password"
                       id="password"
-                      placeholder="Your Password"
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      placeholder="Tu contraseña"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full mb-2 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    <button
+                      onClick={validateUser}
+                      className="w-full mb-2 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    >
                       Iniciar sesión
                     </button>
                     <Link
-                    to='donar'
+                      to="donar"
                       type="button"
                       className="cursor-pointer text-center w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                     >
