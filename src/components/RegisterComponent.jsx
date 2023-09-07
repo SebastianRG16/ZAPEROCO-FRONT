@@ -1,14 +1,60 @@
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import juntosLoLograremos from "../assets/images/juntosLoLograremos.png";
 import { Link } from "react-router-dom";
 
+const baseURL = "https://apizaperoco.onrender.com/donation/donation/";
+
+
 export function RegisterComponent() {
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
+
+    await toast.promise(
+      axios
+        .post(baseURL, {
+          name: data.name,
+          lastName: data.lastName,
+          card: data.card,
+          celphone: data.celphone,
+          email: data.email,
+          tipe_donation: data.tipe_donation,
+          tipe_user: data.tipe_user,
+        })
+        .then((reponse) => {
+          reset();
+        }),
+      {
+        loading: "Guardando...",
+        success: <b>Registro exitoso!</b>,
+        error: (
+          <b>
+            No fue posible realizar el registro, intentelo nuevamente o
+            comuniquese con el area de desarrollo
+          </b>
+        ),
+      }
+    );
+    setIsLoading(false);
+  });
+
   return (
     <div className="">
       <div className="lg:grid lg:grid-cols-2 max-w-screen-2xl bg-slate-200">
         <div className="flex max-lg:h-screen lg:h-auto">
-          <div className="m-auto">
-            <div>
-              <div className="mt-5 bg-white rounded-lg shadow">
+          <div className="m-auto w-full">
+            <form onSubmit={onSubmit} className="flex justify-center">
+              <div className="mt-5 bg-white rounded-lg shadow max-sm:w-full max-md:4/5 max-lg:w-3/6 lg:w-4/6">
                 <div className="flex">
                   <div className="flex-1 py-5 pl-5 overflow-hidden">
                     <svg
@@ -47,99 +93,139 @@ export function RegisterComponent() {
                   <input
                     placeholder="Nombres"
                     className="mb-2 text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                    {...register("name", { required: true })}
                   />
+                  {errors.name && (
+                    <span className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                      Este campo es requerido
+                    </span>
+                  )}
                   <input
                     placeholder="Apellidos"
                     className="mb-2 text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                    {...register("lastName", { required: true })}
                   />
-
+                  {errors.lastName && (
+                    <span className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                      Este campo es requerido
+                    </span>
+                  )}
                   <div className="mb-2 flex-grow">
                     <input
                       placeholder="Cedula"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                      {...register("card", { required: true })}
                     />
+                    {errors.card && (
+                      <span className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </div>
                   <div className="mb-2 flex-grow">
                     <input
                       placeholder="Numero telefonico"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                      {...register("celphone", { required: true })}
                     />
+                    {errors.celphone && (
+                      <span className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </div>
                   <div className="mb-2 flex-grow">
                     <input
                       placeholder="Correo electronico"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
+                      {...register("email", { required: true })}
                     />
+                    {errors.email && (
+                      <span className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                        Este campo es requerido
+                      </span>
+                    )}
                   </div>
-                  <div className="flex w-full mb-2">
-                    <div className="w-1/2">
-                      <p>Tu aporte voluntario:</p>
+                  <div className="flex w-full mb-5 flex-col">
+                    <div className="flex">
+                      <div className="w-1/2">
+                        <p>Tu aporte voluntario:</p>
+                      </div>
+                      <div className="w-1/2 grid grid-cols-2">
+                        <div className="items-center">
+                          <input
+                            type="radio"
+                            value="urna"
+                            className="peer relative h-4 w-4 cursor-pointer rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
+                            {...register("tipe_donation", { required: true })}
+                          />
+                          <label className="ml-2 text-sm font-medium text-gray-900">
+                            Urna
+                          </label>
+                        </div>
+                        <div className="items-center">
+                          <input
+                            type="radio"
+                            value="electrónico"
+                            className="peer relative h-4 w-4 cursor-pointer rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
+                            {...register("tipe_donation", { required: true })}
+                          />
+                          <label className="ml-2 text-sm font-medium text-gray-900">
+                            Electronico
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                    <div className="w-1/2 grid grid-cols-2">
-                      <div className=" items-center mb-4">
+                    <div className="">
+                      {errors.tipe_donation && (
+                        <p className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                          Este campo es obligatorio.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-3/4 flex flex-col">
+                    <div className="grid grid-cols-2">
+                      <div className="items-center">
                         <input
                           id="default-radio-1"
                           type="radio"
-                          value=""
+                          value="asistente"
                           name="default-radio"
-                          //   className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
                           className="peer relative h-4 w-4 cursor-pointer  rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
+                          {...register("tipe_user", { required: true })}
                         />
                         <label className="ml-2 text-sm font-medium text-gray-900 ">
-                          Urna
+                          Asistente
                         </label>
                       </div>
                       <div className=" items-center">
                         <input
                           id="default-radio-2"
                           type="radio"
-                          value=""
+                          value="especial"
                           name="default-radio"
-                          //   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
                           className="peer relative h-4 w-4 cursor-pointer rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
+                          {...register("tipe_user", { required: true })}
                         />
                         <label className="ml-2 text-sm font-medium text-gray-900 ">
-                          Electronico
+                          Invitado especial
                         </label>
                       </div>
                     </div>
-                  </div>
-                  <div className="w-3/4 grid grid-cols-2">
-                    <div className=" items-center">
-                      <input
-                        id="default-radio-1"
-                        type="radio"
-                        value=""
-                        name="default-radio"
-                        //   className="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
-                        className="peer relative h-4 w-4 cursor-pointer  rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 ">
-                        Asistente
-                      </label>
-                    </div>
-                    <div className=" items-center">
-                      <input
-                        id="default-radio-2"
-                        type="radio"
-                        value=""
-                        name="default-radio"
-                        //   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
-                        className="peer relative h-4 w-4 cursor-pointer rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-900 ">
-                        Invitado especial
-                      </label>
+                    <div className="">
+                      {errors.tipe_user && (
+                        <p className="text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+                          Este campo es obligatorio.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
                 <hr className="mt-4" />
                 <div className="flex flex-row-reverse p-3">
                   <div className="flex-initial pl-3">
-                    <button
-                      type="button"
-                      className="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-green-700 rounded-md hover:bg-green-500  focus:outline-none transition duration-300 transform active:scale-95 ease-in-out"
-                    >
+                    <button className="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-green-700 rounded-md hover:bg-green-500  focus:outline-none transition duration-300 transform active:scale-95 ease-in-out">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="24px"
@@ -159,7 +245,6 @@ export function RegisterComponent() {
                   </div>
                   <div className="flex-initial">
                     <Link
-                      to="/"
                       type="button"
                       className="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize rounded-md bg-red-700 hover:bg-red-500 hover:fill-curren focus:outline-none  transition duration-300 transform active:scale-95 ease-in-out"
                     >
@@ -178,7 +263,7 @@ export function RegisterComponent() {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <div className="w-full h-screen flex items-center justify-center max-lg:hidden">

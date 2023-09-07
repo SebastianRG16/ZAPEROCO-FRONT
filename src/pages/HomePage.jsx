@@ -31,15 +31,15 @@ export function HomePage() {
               </li>
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
                 <Link
-                  to="resumen/"
+                  to="donaciones/"
                   className={` ${
-                    direccion == "/home/resumen/"
+                    direccion == "/home/donaciones/"
                       ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
                       : ""
                   } flex items-center hover:text-cyan-900  hover:font-semibold`}
                   href=""
                 >
-                  Resumen
+                  Donaciones
                 </Link>
               </li>
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
@@ -53,6 +53,19 @@ export function HomePage() {
                   href=""
                 >
                   Leer codigo QR
+                </Link>
+              </li>
+              <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+                <Link
+                  to="resumen/"
+                  className={` ${
+                    direccion == "/home/resumen/"
+                      ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                      : ""
+                  } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  href=""
+                >
+                  Resumen
                 </Link>
               </li>
             </ul>

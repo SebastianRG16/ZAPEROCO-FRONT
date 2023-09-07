@@ -5,7 +5,6 @@ export function LogginPage() {
   const navigate = useNavigate();
 
   const validateUser = () => {
-    console.log("hola");
     navigate("home");
   };
 
