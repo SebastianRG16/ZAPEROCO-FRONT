@@ -1,11 +1,8 @@
 import {
-  BrowserRouter,
   Routes,
   Route,
-  Navigate,
   HashRouter,
 } from "react-router-dom";
-import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { LogginPage } from "./pages/LogginPage";
 import { RegisterDonationPage } from "./pages/RegisterDonationPage";
@@ -16,7 +13,6 @@ import { RegisterComponent } from "./components/RegisterComponent";
 import { DonationsTimeRealComponent } from "./components/DonationsTimeRealComponent";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <HashRouter>

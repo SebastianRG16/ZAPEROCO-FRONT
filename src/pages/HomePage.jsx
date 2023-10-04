@@ -42,7 +42,7 @@ export function HomePage() {
                   Donaciones
                 </Link>
               </li>
-              <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+              {/* <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
                 <Link
                   to="QR/"
                   className={` ${
@@ -54,7 +54,7 @@ export function HomePage() {
                 >
                   Leer codigo QR
                 </Link>
-              </li>
+              </li> */}
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
                 <Link
                   to="resumen/"
