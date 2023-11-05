@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import niñosCancer from "../assets/images/niñosCancer.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useState } from "react";
 
 const URL = "https://apizaperoco.onrender.com/generate_token/";
@@ -18,15 +18,15 @@ export function LogginPage() {
   } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true);
+    setIsLoading(!isLoading);
     await toast.promise(
       axios
         .post(URL, {
           username: data.username,
           password: data.password,
         })
-        .then(async (response) => {
-          navigate('home/')
+        .then(async () => {
+          navigate("home");
         }),
       {
         loading: "Verificando...",
@@ -34,8 +34,7 @@ export function LogginPage() {
         error: <b>Credenciales incorrectas</b>,
       }
     );
-
-    setIsLoading(false);
+    setIsLoading(!isLoading);
   });
 
   return (
@@ -48,12 +47,13 @@ export function LogginPage() {
           >
             <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
               <div>
-                <h2 className="text-4xl font-bold text-white">Zaperoco</h2>
+                <h2 className="text-4xl font-extrabold text-white mb-10">Zaperoco</h2>
 
-                <p className="max-w-xl mt-3 text-gray-300">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                  autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                  libero suscipit nam temporibus molestiae
+                <p className="max-w-xl mt-3 text-white font-semibold text-xl">
+                  Este evento es organizado por la fundación mujeres trabajando
+                  por el Meta, con la finalidad de recolectar recursos los
+                  cuales son destinados a ayudar en tratamiento o manutención a
+                  niños que padezcan cáncer.
                 </p>
               </div>
             </div>
@@ -80,7 +80,7 @@ export function LogginPage() {
                       type="username"
                       name="username"
                       id="username"
-                      placeholder="ejemplo@ejemplo.com"
+                      placeholder="Nombre de usuario"
                       className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                       {...register("username", { required: true })}
                     />
@@ -124,7 +124,7 @@ export function LogginPage() {
                       type="button"
                       className="cursor-pointer text-center w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                     >
-                      Hacer donacion
+                      Hacer donación
                     </Link>
                   </div>
                 </form>

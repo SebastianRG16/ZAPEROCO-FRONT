@@ -1,9 +1,18 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export function HomePage() {
   const location = useLocation();
   const direccion = location.pathname;
+
+  // Define un estado para controlar la visibilidad del menú en pantallas pequeñas
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  // Función para alternar la visibilidad del menú en pantallas pequeñas
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
 
   return (
     <div className="h-full w-full justify-center flex bg-slate-200">
@@ -26,7 +35,7 @@ export function HomePage() {
                       : ""
                   } flex items-center hover:text-cyan-900  hover:font-semibold`}
                 >
-                  Registrar informacion
+                  Registrar información
                 </Link>
               </li>
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
@@ -42,19 +51,6 @@ export function HomePage() {
                   Donaciones
                 </Link>
               </li>
-              {/* <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                <Link
-                  to="QR/"
-                  className={` ${
-                    direccion == "/home/QR/"
-                      ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
-                      : ""
-                  } flex items-center hover:text-cyan-900  hover:font-semibold`}
-                  href=""
-                >
-                  Leer codigo QR
-                </Link>
-              </li> */}
               <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
                 <Link
                   to="resumen/"
@@ -78,6 +74,7 @@ export function HomePage() {
               <span>Salir</span>
             </Link>
             <button
+              onClick={toggleMenu}
               className="middle none relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] rounded-lg text-center font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
               data-collapse-target="navbar"
             >
@@ -99,30 +96,48 @@ export function HomePage() {
             </button>
           </div>
           <div
-            className="block h-0 w-full basis-full overflow-hidden text-blue-gray-900 transition-all duration-300 ease-in lg:hidden"
-            data-collapse="navbar"
+            className={`${
+              menuVisible ? "overflow" : "overflow-hidden"
+            } block h-0 w-full basis-full text-blue-gray-900 transition-all duration-300 ease-in lg:hidden`}
+            style={{ zIndex: 1 }}
           >
-            <div className="container mx-auto pb-2">
+            <div className="container mx-auto pb-2 bg-white">
               <ul className="mt-2 mb-4 flex flex-col gap-2">
-                <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                  <a className="flex items-center" href="#">
-                    Pages
-                  </a>
+                <li className="flex justify-center mt-2 p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+                  <Link
+                    to="/home"
+                    className={` ${
+                      direccion == "/home"
+                        ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                        : "text-black"
+                    } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  >
+                    Registrar informacion
+                  </Link>
                 </li>
-                <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                  <a className="flex items-center" href="#">
-                    Account
-                  </a>
+                <li className="flex justify-center p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+                  <Link
+                    to="donaciones/"
+                    className={` ${
+                      direccion == "/home/donaciones/"
+                        ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                        : "text-black"
+                    } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  >
+                    Donaciones
+                  </Link>
                 </li>
-                <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                  <a className="flex items-center" href="#">
-                    Blocks
-                  </a>
-                </li>
-                <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-                  <a className="flex items-center" href="#">
-                    Docs
-                  </a>
+                <li className="flex justify-center p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+                  <Link
+                    to="resumen/"
+                    className={` ${
+                      direccion == "/home/resumen/"
+                        ? "font-semibold text-cyan-900 underline underline-offset-8 decoration-amber-500 decoration-wavy decoration-2"
+                        : "text-black"
+                    } flex items-center hover:text-cyan-900  hover:font-semibold`}
+                  >
+                    Resumen
+                  </Link>
                 </li>
               </ul>
               <button

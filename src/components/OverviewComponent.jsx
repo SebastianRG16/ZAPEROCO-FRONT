@@ -35,9 +35,9 @@ export function OverviewComponent() {
                   <thead>
                     <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                       <th className="px-4 py-3">Nombre completo</th>
-                      <th className="px-4 py-3">Cedula</th>
-                      <th className="px-4 py-3">Tipo donacion</th>
-                      <th className="px-4 py-3">Telefono</th>
+                      <th className="px-4 py-3">Cédula</th>
+                      <th className="px-4 py-3">Tipo donación</th>
+                      <th className="px-4 py-3">Teléfono</th>
                       <th className="px-4 py-3">Correo</th>
                     </tr>
                   </thead>

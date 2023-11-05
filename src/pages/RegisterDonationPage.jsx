@@ -18,7 +18,7 @@ export function RegisterDonationPage() {
   } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true);
+    setIsLoading(!isLoading);
 
     await toast.promise(
       axios
@@ -29,7 +29,7 @@ export function RegisterDonationPage() {
           celphone: data.celphone,
           email: data.email,
         })
-        .then((response) => {
+        .then(() => {
           reset();
         }),
       {
@@ -43,7 +43,7 @@ export function RegisterDonationPage() {
         ),
       }
     );
-    setIsLoading(false);
+    setIsLoading(!isLoading);
   });
 
   return (
@@ -110,7 +110,7 @@ export function RegisterDonationPage() {
                   )}
                   <div className="mb-2 flex-grow">
                     <input
-                      placeholder="Cedula"
+                      placeholder="Cédula"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                       {...register("card", { required: true })}
                     />
@@ -122,7 +122,7 @@ export function RegisterDonationPage() {
                   </div>
                   <div className="mb-2 flex-grow">
                     <input
-                      placeholder="Numero telefonico"
+                      placeholder="Número telefónico"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white  focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                       {...register("celphone", { required: true })}
                     />
@@ -134,7 +134,7 @@ export function RegisterDonationPage() {
                   </div>
                   <div className=" flex-grow">
                     <input
-                      placeholder="Correo electronico"
+                      placeholder="Correo electrónico"
                       className=" text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                       {...register("email", { required: true })}
                     />
@@ -146,9 +146,29 @@ export function RegisterDonationPage() {
                   </div>
                 </div>
                 <hr className="mt-4" />
-                <div className="flex flex-row-reverse p-3">
+                <div className="flex flex-row-reverse p-3 gap-2">
+                  <div className="flex-initial">
+                    <Link
+                      to="/"
+                      type="button"
+                      className="w-[140px] flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize rounded-md bg-red-700 hover:bg-red-500 hover:fill-curren focus:outline-none  transition duration-300 transform active:scale-95 ease-in-out"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        fill="#FFFFFF"
+                      >
+                        <path d="M0 0h24v24H0V0z" fill="none"></path>
+                        <path d="M8 9h8v10H8z" opacity=".3"></path>
+                        <path d="M15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path>
+                      </svg>
+                      <span className="pl-0 mx-1">Cancelar</span>
+                    </Link>
+                  </div>
                   <div className="flex-initial pl-3">
-                    <button className="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-green-700 rounded-md hover:bg-green-500  focus:outline-none transition duration-300 transform active:scale-95 ease-in-out">
+                    <button className="w-[140px] flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-green-700 rounded-md hover:bg-green-500  focus:outline-none transition duration-300 transform active:scale-95 ease-in-out">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="24px"
@@ -166,25 +186,6 @@ export function RegisterDonationPage() {
 
                       <span className="pl-2 mx-1">Enviar</span>
                     </button>
-                  </div>
-                  <div className="flex-initial">
-                    <Link
-                      to="/"
-                      type="button"
-                      className="flex items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize rounded-md bg-red-700 hover:bg-red-500 hover:fill-curren focus:outline-none  transition duration-300 transform active:scale-95 ease-in-out"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24px"
-                        viewBox="0 0 24 24"
-                        width="24px"
-                      >
-                        <path d="M0 0h24v24H0V0z" fill="none"></path>
-                        <path d="M8 9h8v10H8z" opacity=".3"></path>
-                        <path d="M15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path>
-                      </svg>
-                      <span className="pl-2 mx-1">Cancelar</span>
-                    </Link>
                   </div>
                 </div>
               </div>

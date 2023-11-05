@@ -1,55 +1,133 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const baseURL = "https://apizaperoco.onrender.com/donation/donation/";
+
 export function DonationsTimeRealComponent() {
+  const [get, setGet] = useState(null);
+  const [valor1, setValor1] = useState(0); //especial
+  const [valor2, setValor2] = useState(0); //invitado
+  // const [porcentaje1, setporcentaje1] = useState(0); //especial
+  // const [porcentaje2, setporcentaje1] = useState(0); //invitado
+
   // Datos de ejemplo para comparar dos valores
-  const valor1 = 30;
-  const valor2 = 70;
+  // let valor1 = 0;
+  // let valor2 = 0;
+  let porcentajeStroke;
 
   const radio = 100; // Radio del gráfico de torta
   const centerX = radio + 10; // Coordenada X del centro del gráfico
   const centerY = radio + 10; // Coordenada Y del centro del gráfico
-  const valor1Angle = (valor1 / 100) * 360; // Ángulo para Valor 1
-  const valor2Angle = (valor2 / 100) * 360; // Ángulo para Valor 2
 
-  // Función para calcular las coordenadas de un punto en el borde del círculo
-  const calcularCoordenadas = (angle) => {
-    const radians = (angle - 90) * (Math.PI / 180);
-    const x = centerX + radio * Math.cos(radians);
-    const y = centerY + radio * Math.sin(radians);
-    return { x, y };
+  const getFullData = async () => {
+    try {
+      await axios.get(baseURL).then((response) => {
+        setGet(response.data);
+        CalculationPerson();
+      });
+    } catch (error) {
+      setGet(null);
+    }
   };
 
+  useEffect(() => {
+    getFullData();
+  }, []);
+
+  useEffect(() => {
+    CalculationPerson();
+  }, [get]);
+
+  const CalculationPerson = () => {
+    
+    if (get !== null) {
+      const asistentesData = get.filter(
+        (user) => user.tipe_user === "asisitente"
+      );
+      const especialesData = get.filter(
+        (user) => user.tipe_user === "especial"
+      );
+      
+      setValor1(asistentesData.length);
+      setValor2(especialesData.length);
+    }
+  };
+
+  const calcularInvitados = () => {
+    const totalStroke = 628;
+    let totalInvitados = valor1 + valor2;
+    let porcentaje = Math.trunc((valor2 * 100) / totalInvitados);
+    console.log(porcentaje)
+    porcentajeStroke = Math.trunc((totalStroke * porcentaje) / 100);
+  };
+
+  calcularInvitados();
+
+  let socket = null;
+
+  function connectWebSocket() {
+    socket = new WebSocket("wss://pruebas-1nzk.onrender.com");
+
+    socket.addEventListener("open", (event) => {
+      console.log("WebSocket connection established:", event);
+    });
+
+    socket.addEventListener("message", () => {
+      getFullData();
+      // Maneja el mensaje entrante aquí
+    });
+
+    socket.addEventListener("close", (event) => {
+      console.log("WebSocket connection closed:", event);
+
+      // Intenta volver a conectarte después de un breve retraso
+      // setTimeout(connectWebSocket, 2000);
+    });
+  }
+
+  useEffect(() => {
+    connectWebSocket();
+  }, []);
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">Comparación de Valores</h1>
-        <svg width={radio * 2 + 20} height={radio * 2 + 20}>
-          {/* Valor 1 */}
-          <circle
-            cx={centerX}
-            cy={centerY}
-            r={radio}
-            fill="transparent"
-            stroke="#FF6384"
-            strokeWidth="20"
-            strokeDasharray={`628`}
-            strokeDashoffset="628 - 440"
-            transform={`rotate(-90 ${centerX} ${centerY})`}
-          />
-          {/* Valor 2 */}
-          <circle
-            cx={centerX}
-            cy={centerY}
-            r={radio}
-            fill="transparent"
-            stroke="#36A2EB"
-            strokeWidth="20"
-            strokeDasharray={`628`}
-            strokeDashoffset={`188`} // Ajuste aquí
-            transform={`rotate(-90 ${centerX} ${centerY})`}
-          />
-        </svg>
-        <div className="mt-4">
-          <p>Valor 1: {valor1}%</p>
-          <p>Valor 2: {valor2}%</p>
+    <div className="w-full h-screen flex">
+      <div className="w-1/2 h-full text-black flex flex-col items-center justify-center">
+        <p className="h-1/2 text-[#FF6384] flex items-center text-9xl font-black">+{valor1}</p>
+        <p className="h-1/2 text-[#36A2EB] flex -mt-32 items-center text-9xl font-black">+{valor2}</p>
+      </div>
+      <div className="w-1/2 flex justify-center items-center h-full">
+        <div className="text-center flex flex-col justify-center items-center">
+          <h1 className="text-6xl font-bold mb-16">Comparación de Valores</h1>
+          <svg className="" width={radio * 2 + 20} height={radio * 2 + 20}>
+            {/* Valor 1 */}
+            <circle
+              cx={centerX}
+              cy={centerY}
+              r={radio}
+              fill="transparent"
+              stroke="#FF6384"
+              strokeWidth="20"
+              strokeDasharray={`628`}
+              strokeDashoffset="628 - 440"
+              transform={`rotate(-90 ${centerX} ${centerY})`}
+            />
+            {/* Valor 2 */}
+            <circle
+              cx={centerX}
+              cy={centerY}
+              r={radio}
+              fill="transparent"
+              stroke="#36A2EB"
+              strokeWidth="20"
+              strokeDasharray={`628`}
+              strokeDashoffset={`${porcentajeStroke}`} // Ajuste aquí
+              transform={`rotate(-90 ${centerX} ${centerY})`}
+            />
+          </svg>
+          <div className="mt-4 w-[300px]">
+            <p className="text-xl text-right font-semibold">Asistentes: {valor1}%</p>
+            <p className="text-xl text-right font-semibold">Invitados especiales: {valor2}%</p>
+          </div>
         </div>
       </div>
     </div>
