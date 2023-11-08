@@ -92,12 +92,12 @@ export function DonationsTimeRealComponent() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex">
-      <div className="w-1/2 h-full text-black flex flex-col items-center justify-center">
+    <div className="w-full h-screen flex max-md:flex-col justify-center">
+      <div className="w-1/2 h-full text-black flex max-md:mt-20 flex-col items-center max-md:w-full justify-center">
         <p className="h-1/2 text-[#FF6384] flex items-center text-9xl font-black">+{valor2}</p>
-        <p className="h-1/2 text-[#36A2EB] flex -mt-32 items-center text-9xl font-black">+{valor1}</p>
+        <p className="h-1/2 text-[#36A2EB] flex md:-mt-32 items-center text-9xl font-black">+{valor1}</p>
       </div>
-      <div className="w-1/2 flex justify-center items-center h-full">
+      <div className="w-1/2 flex justify-center items-center max-md:w-full h-full">
         <div className="text-center flex flex-col justify-center items-center">
           <h1 className="text-6xl font-bold mb-16">Comparación de Valores</h1>
           <svg className="" width={radio * 2 + 20} height={radio * 2 + 20}>
