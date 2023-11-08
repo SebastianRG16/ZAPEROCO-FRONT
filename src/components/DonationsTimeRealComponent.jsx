@@ -7,13 +7,12 @@ export function DonationsTimeRealComponent() {
   const [get, setGet] = useState(null);
   const [valor1, setValor1] = useState(0); //especial
   const [valor2, setValor2] = useState(0); //invitado
-  // const [porcentaje1, setporcentaje1] = useState(0); //especial
-  // const [porcentaje2, setporcentaje1] = useState(0); //invitado
 
   // Datos de ejemplo para comparar dos valores
   // let valor1 = 0;
   // let valor2 = 0;
   let porcentajeStroke;
+  let porcentaje = 0;
 
   const radio = 100; // Radio del gráfico de torta
   const centerX = radio + 10; // Coordenada X del centro del gráfico
@@ -56,8 +55,11 @@ export function DonationsTimeRealComponent() {
   const calcularInvitados = () => {
     const totalStroke = 628;
     let totalInvitados = valor1 + valor2;
-    let porcentaje = Math.trunc((valor2 * 100) / totalInvitados);
+    porcentaje = Math.trunc((valor2 * 100) / totalInvitados);
+    console.log('hola')
     console.log(porcentaje)
+    // setporcentaje1(porcentaje)
+    // setporcentaje2(100 - porcentaje)
     porcentajeStroke = Math.trunc((totalStroke * porcentaje) / 100);
   };
 
@@ -92,8 +94,8 @@ export function DonationsTimeRealComponent() {
   return (
     <div className="w-full h-screen flex">
       <div className="w-1/2 h-full text-black flex flex-col items-center justify-center">
-        <p className="h-1/2 text-[#FF6384] flex items-center text-9xl font-black">+{valor1}</p>
-        <p className="h-1/2 text-[#36A2EB] flex -mt-32 items-center text-9xl font-black">+{valor2}</p>
+        <p className="h-1/2 text-[#FF6384] flex items-center text-9xl font-black">+{valor2}</p>
+        <p className="h-1/2 text-[#36A2EB] flex -mt-32 items-center text-9xl font-black">+{valor1}</p>
       </div>
       <div className="w-1/2 flex justify-center items-center h-full">
         <div className="text-center flex flex-col justify-center items-center">
@@ -125,8 +127,8 @@ export function DonationsTimeRealComponent() {
             />
           </svg>
           <div className="mt-4 w-[300px]">
-            <p className="text-xl text-right font-semibold">Asistentes: {valor1}%</p>
-            <p className="text-xl text-right font-semibold">Invitados especiales: {valor2}%</p>
+            <p className="text-xl text-right font-semibold">Asistentes: {Math.trunc((valor2 * 100) / (valor1 + valor2))}%</p>
+            <p className="text-xl text-right font-semibold">Invitados especiales: {100 - Math.trunc((valor2 * 100) / (valor1 + valor2))}%</p>
           </div>
         </div>
       </div>
